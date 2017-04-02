@@ -22,6 +22,7 @@ export class Bot implements IBot {
     public typing: Typing;
     public data: any = {};
 
+    private blocked: boolean;
     private scenario: Scenario;
     private process: Question;
 
@@ -41,12 +42,24 @@ export class Bot implements IBot {
         this.next(answer);
     }
 
+    public onBotPost(question: Question, message: Message): void {
+        // todo override if necessary
+    }
+
+    private synchronized(sync: (done: Function) => void): void {
+        this.blocked = true;
+        sync(() => {
+            this.blocked = false;
+        });
+    }
+
     private post(self: boolean, question: Question): void {
         if (self) {
             if (this.typing) {
                 this.typing.destroy();
+            } else {
+                this.typing = new Typing(this.self);
             }
-            this.typing = new Typing(this.self);
             this.typing.schedule(() => {
                 this.processPost(self, question);
             });
@@ -58,12 +71,21 @@ export class Bot implements IBot {
     private processPost(self: boolean, question: Question): void {
         let msg = new Message(this.getAuthor(self), question.title, question.actions);
         if (question.skip) {
-            setTimeout(this.next.bind(this), question.skip);
+            // todo find a way fix the error {Supplied parameters do not match any signature of call target.}
+            this.synchronized((done: Function) => {
+                setTimeout(() => {
+                    this.next();
+                    done();
+                });
+            }, question.skip);
         }
         this.messages.push(msg);
+        if (self) {
+            this.onBotPost(this.getActiveProcess(), msg);
+        }
     }
 
-    private next(answer: any): void {
+    private next(answer?: any): void {
         if (answer) {
             this.addData(this.process.name, answer);
         }

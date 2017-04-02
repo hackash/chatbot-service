@@ -15,5 +15,6 @@ export interface IBot {
     addData(key: string, value: string): void;
     start(scenario: IScenario): void;
     answer(answer: any): void;
+    onBotPost(question: IQuestion, message: IMessage): void;
 }
 

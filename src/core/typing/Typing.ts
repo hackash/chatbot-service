@@ -3,7 +3,7 @@ import {ITyping} from "./ITyping";
 
 export class Typing implements ITyping {
 
-    public isInProgress: Boolean;
+    public isInProgress: Boolean = false;
     private timer: any = null;
 
     constructor(public member: Author, public interval?: number) {
@@ -16,16 +16,26 @@ export class Typing implements ITyping {
         }
         this.isInProgress = true;
         this.timer = setTimeout(() => {
-            callback();
             this.destroy();
+            callback();
         }, this.interval);
+        this.onStart();
     }
 
     public destroy(): void {
         if (this.timer) {
             clearTimeout(this.timer);
             this.isInProgress = false;
+            this.onDone();
         }
     };
+
+    public onStart(): void {
+        // todo override if necessary
+    }
+
+    public onDone(): void {
+        // todo override if necessary
+    }
 
 }

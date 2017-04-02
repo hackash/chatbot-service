@@ -6,4 +6,6 @@ export interface ITyping {
     member: IAuthor;
     schedule(callback: Function): void;
     destroy(): void;
+    onStart(): void;
+    onDone(): void;
 }
