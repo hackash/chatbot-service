@@ -16,5 +16,6 @@ export interface IBot {
     start(scenario: IScenario): void;
     answer(answer: any): void;
     onBotPost(question: IQuestion, message: IMessage): void;
+    isBlocked(): boolean;
 }
 
