@@ -1,6 +1,6 @@
-import {IRule} from "./IRule";
+import {IRule, Validator} from "./IRule";
 
 export class Rule implements IRule {
     message: string;
-    expression: RegExp;
+    expression: RegExp | Validator;
 }

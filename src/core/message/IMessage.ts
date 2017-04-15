@@ -3,6 +3,7 @@ import {IAuthor} from "../../facets/author/IAuthor";
 
 export interface IMessage {
     actions?: Array<IScenario>;
+    timestamp: number;
     author: IAuthor;
     text: string;
 }

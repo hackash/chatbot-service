@@ -4,6 +4,7 @@ import {Author} from "../../facets/author/Author";
 import {Message} from "../message/Message";
 import {Typing} from "../typing/Typing";
 import {IBot} from "./IBot";
+import {Rule} from "../../facets/rule/Rule";
 
 export class Bot implements IBot {
 
@@ -90,14 +91,45 @@ export class Bot implements IBot {
         }
     }
 
+    private postErrors(errors: Array<string>): void {
+        let text = errors.join(',');
+        let errorMsg = new Message(this.getAuthor(true), text);
+        this.messages.push(errorMsg);
+    }
+
     private next(answer?: any): void {
         if (answer) {
-            this.addData(this.process.name, answer);
+            let errors = this.isValidAnswer(answer);
+            if (errors.length === 0) {
+                this.addData(this.process.name, answer);
+            } else {
+                this.postErrors(errors);
+                return;
+            }
         }
         if (this.processes.length - 1 > this.activeProcessIndex) {
             this.activeProcessIndex++;
             this.startProcess(this.getActiveProcess());
         }
+    }
+
+    private isValidAnswer(answer: any): Array<string> {
+        let errors: Array<string> = [];
+        let qs: Question = this.getActiveProcess();
+        if (qs.validate && qs.rules.length > 0) {
+            qs.rules.forEach((rule: Rule) => {
+                if (rule.expression instanceof RegExp) {
+                    if (!rule.expression.test(answer)) {
+                        errors.push(rule.message);
+                    }
+                } else if (typeof rule.expression === "function") {
+                    if (!rule.expression(answer)) {
+                        errors.push(rule.message);
+                    }
+                }
+            });
+        }
+        return errors;
     }
 
     private startProcess(question: Question): void {
