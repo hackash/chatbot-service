@@ -1,10 +1,10 @@
 import {Scenario} from "../../facets/scenario/Scenario";
 import {Question} from "../../facets/question/Question";
 import {Author} from "../../facets/author/Author";
+import {Rule} from "../../facets/rule/Rule";
 import {Message} from "../message/Message";
 import {Typing} from "../typing/Typing";
 import {IBot} from "./IBot";
-import {Rule} from "../../facets/rule/Rule";
 
 export class Bot implements IBot {
 
@@ -92,14 +92,17 @@ export class Bot implements IBot {
     }
 
     private postErrors(errors: Array<string>): void {
-        let text = errors.join(',');
+        let text = errors.join(",");
         let errorMsg = new Message(this.getAuthor(true), text);
         this.messages.push(errorMsg);
+        this.onBotPost(this.getActiveProcess(), errorMsg);
     }
 
     private next(answer?: any): void {
         if (answer) {
+            let userMsg = new Message(this.getAuthor(false), answer);
             let errors = this.isValidAnswer(answer);
+            this.messages.push(userMsg);
             if (errors.length === 0) {
                 this.addData(this.process.name, answer);
             } else {
