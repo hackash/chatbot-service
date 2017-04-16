@@ -1,5 +1,6 @@
 {
 	"extends": "tslint:recommended",
+	"no-console": [true, "log", "error"],
 	"rules": {
 		"use-strict": true
 	}

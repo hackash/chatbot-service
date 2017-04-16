@@ -1,21 +1,19 @@
 import {IQuestion} from "../../facets/question/IQuestion";
 import {IScenario} from "../../facets/scenario/IScenario";
 import {IAuthor} from "../../facets/author/IAuthor";
-import {IMessage} from "../message/IMessage";
-import {ITyping} from "../typing/ITyping";
+import {IChat} from "../chat/IChat";
 
 export interface IBot {
+    typingInterval: number;
     activeProcessIndex: number;
     processes: Array<IQuestion>;
-    messages: Array<IMessage>;
-    typing: ITyping;
     self: IAuthor;
     user: IAuthor;
     data: any;
+    chat: IChat,
     addData(key: string, value: string): void;
     start(scenario: IScenario): void;
     answer(answer: any): void;
-    onBotPost(question: IQuestion, message: IMessage): void;
     isBlocked(): boolean;
 }
 

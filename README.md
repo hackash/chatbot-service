@@ -1,4 +1,4 @@
-## Chat bot service for javascript projects
+## Chat bot service for javascript applications
 
 > Javascript service to create chat bots with your custom questions and scenarios
 

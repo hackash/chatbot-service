@@ -1,11 +1,12 @@
 import {IAuthor} from "../../facets/author/IAuthor";
 
 export interface ITyping {
-    isInProgress: Boolean;
+    active: Boolean;
     interval?: number;
     member: IAuthor;
-    schedule(callback: Function): void;
+    ping(): void;
     destroy(): void;
-    onStart(): void;
-    onDone(): void;
+    onStart(member: IAuthor): void;
+    onEnd(member: IAuthor): void;
+    onPing(member: IAuthor): void;
 }

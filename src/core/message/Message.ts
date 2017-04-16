@@ -8,4 +8,8 @@ export class Message implements IMessage {
     constructor(public author: Author, public text: string, public actions?: Array<Scenario>) {
         this.timestamp = new Date().getTime();
     }
+
+    public flushText(): void {
+        this.text = "";
+    }
 }

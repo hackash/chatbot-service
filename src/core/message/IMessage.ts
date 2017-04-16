@@ -6,4 +6,5 @@ export interface IMessage {
     timestamp: number;
     author: IAuthor;
     text: string;
+    flushText(): void;
 }

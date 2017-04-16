@@ -1,7 +1,7 @@
 {
   "name": "chatbot-service",
   "version": "0.1.0",
-  "description": "Example git project that is used for typescript libraries as a starter pack",
+  "description": "Chat bot service for javascript applications",
   "main": "dist/main.js",
   "typings": "dist/main.d.ts",
   "jam": {
@@ -22,30 +22,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DxCx/ts-library-starter.git"
+    "url": "git+https://github.com/hackash/chatbot-service.git"
   },
   "keywords": [
-    "example",
+    "chatbot",
     "typescript",
     "library",
-    "starter",
-    "webpack",
-    "browserify",
-    "dts-bundle",
-    "package",
-    "tslint",
-    "jest",
-    "babel",
-    "tsloader",
-    "boilerplate",
-    "awesome-typescript-loader"
+    "javascript",
+    "library",
+    "es5",
+    "es6",
+    "bot",
+    "chat",
+    "talking"
   ],
-  "author": "Hagai Cohen",
+  "author": "Ashot Harutyunyan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DxCx/ts-library-starter/issues"
+    "url": "https://github.com/hackash/chatbot-service/issues"
   },
-  "homepage": "https://github.com/DxCx/ts-library-starter#readme",
+  "homepage": "https://github.com/hackash/chatbot-service#readme",
   "devDependencies": {
     "@types/jest": "^0.9.31",
     "@types/node": "^6.0.38",

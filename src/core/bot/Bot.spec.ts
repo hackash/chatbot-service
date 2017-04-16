@@ -19,6 +19,7 @@ let questions: Array<Question> = [
     {
         validate: false,
         actions: [],
+        skip: 0,
         title: 'Hey how is your life ?',
         name: 'life'
     }
@@ -71,37 +72,6 @@ describe("Bot", () => {
         it("Should set active process index", () => {
             bot.start();
             expect(bot.activeProcessIndex).toBe(0);
-        });
-    });
-
-
-    describe("Message posting", () => {
-        it("Should post the first question", (done) => {
-            bot.onBotPost = () => {
-                expect(bot.messages.length).toBeGreaterThan(0);
-                done();
-            };
-            bot.start();
-        });
-
-        it("Should skip the question", (done) => {
-            bot.onBotPost = () => {
-                if (bot.isBlocked()) {
-                    expect(bot.messages.length).toBeGreaterThan(0);
-                } else {
-                    expect(bot.messages.length).toBeGreaterThan(1);
-                    done();
-                }
-            };
-            bot.start();
-        });
-
-        it("Should block an answers if question has skip", (done) => {
-            bot.onBotPost = () => {
-                expect(bot.isBlocked()).toBeTruthy();
-                done();
-            };
-            bot.start();
         });
     });
 

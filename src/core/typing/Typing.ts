@@ -3,39 +3,42 @@ import {ITyping} from "./ITyping";
 
 export class Typing implements ITyping {
 
-    public isInProgress: Boolean = false;
+    public active: Boolean = false;
     private timer: any = null;
 
-    constructor(public member: Author, public interval?: number) {
-        this.interval = interval || 2000;
+    constructor(public member: Author, public interval: number = 1000) {
     }
 
-    public schedule(callback: Function): void {
+    public ping(): void {
         if (this.timer) {
             clearTimeout(this.timer);
         }
-        this.isInProgress = true;
+        if (!this.active) {
+            this.active = true;
+            this.onStart(this.member);
+        }
         this.timer = setTimeout(() => {
             this.destroy();
-            callback();
         }, this.interval);
-        this.onStart();
     }
 
     public destroy(): void {
         if (this.timer) {
             clearTimeout(this.timer);
-            this.isInProgress = false;
-            this.onDone();
+            this.active = false;
+            this.onEnd(this.member);
         }
     };
 
-    public onStart(): void {
+    public onStart(member: Author): void {
         // todo override if necessary
     }
 
-    public onDone(): void {
+    public onPing(member: Author): void {
         // todo override if necessary
     }
 
+    public onEnd(member: Author): void {
+        // todo override if necessary
+    }
 }
